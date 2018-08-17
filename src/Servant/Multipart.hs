@@ -43,7 +43,8 @@ import Data.List (find)
 import Data.Maybe
 import Data.Monoid
 import Data.Text (Text, unpack)
-import Data.Text.Encoding (decodeUtf8)
+import Data.Text.Encoding (decodeUtf8With)
+import Data.Text.Encoding.Error (lenientDecode)
 import Data.Typeable
 import Network.Wai
 import Network.Wai.Parse
@@ -174,7 +175,7 @@ fromRaw (inputs, files) = MultipartData is fs
                    (dec $ fileContentType fileinfo)
                    (fileContent fileinfo)
 
-        dec = decodeUtf8
+        dec = decodeUtf8With lenientDecode
 
 -- | Representation for an uploaded file, usually resulting from
 --   picking a local file for an HTML input that looks like
